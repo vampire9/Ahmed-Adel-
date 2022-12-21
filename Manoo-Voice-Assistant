@@ -1,0 +1,277 @@
+#Name : Ahmed Adel Mohamed  
+#ID : 20200604
+import speech_recognition as sr
+import webbrowser
+import time
+import playsound
+import os
+import urllib
+import re  
+import random
+from time import ctime
+from gtts import gTTS
+import subprocess
+import pyttsx3
+import tkinter
+import json
+import operator
+import datetime
+import wikipedia
+import pyjokes
+import smtplib
+from bs4 import BeautifulSoup
+import ctypes
+import requests
+import shutil
+from clint.textui import progress
+from time import ctime
+from ecapture import ecapture as ec
+from bs4 import BeautifulSoup
+import win32com.client as wincl
+from urllib.request import urlopen
+engine = pyttsx3.init('sapi5') #Name of the pyttsx3.drivers module to load and use. SAPI5 on Windows
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[0].id) # “0” for the Male , "1" for the Female
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+def wishMe():
+    hour = int(datetime.datetime.now().hour) #get The Time Now 
+    if hour>= 0 and hour<12:
+        speak("Good Morning Sir !")
+  
+    elif hour>= 12 and hour<18:
+        speak("Good Afternoon Sir !")  
+  
+    else:
+        speak("Good Evening Sir !") 
+  
+    assname =("Maaanooo")
+    speak("I am your Assistant")
+    speak(assname)
+
+def changeVoice():
+	engine = pyttsx3.init('sapi5') 
+	voices = engine.getProperty('voices')
+	engine.setProperty('voice', voices[1].id)
+	speak("Hi Iam Here For You")
+
+
+def username():
+    speak("What should i call you sir")
+    uname = takeCommand()
+    speak("Welcome Mister")
+    speak(uname)
+    speak("How can i Help you, Sir")
+def takeCommand():
+     
+    r = sr.Recognizer()
+     
+    with sr.Microphone() as source:
+         
+        print("Listening...")
+        r.pause_threshold = 1 #the number of seconds the system will take to recognize the voice
+        audio = r.listen(source)
+  
+    try:
+        print("Recognizing...")   
+        query = r.recognize_google(audio, language ='en-in')
+        print(f"User said: {query}\n")
+  
+    except Exception as e:
+        print(e)   
+        print("Unable to Recognize your voice.") 
+        return speak("Unable to Recognize your voice.") 
+     
+    return query
+def sendEmail(to, content):
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls() #StartTLS is a protocol command used to inform the email server
+     
+    # Enable low security in gmail
+    server.login('your email id', 'your email password')
+    server.sendmail('your email id', to, content)
+    server.close()
+if __name__ == '__main__':
+	clear = lambda: os.system('cls')
+	
+	# This Function will clean any
+	# command before execution of this python file
+	clear()
+	wishMe()
+	username()
+	
+	while True:
+		
+		query = takeCommand().lower() 
+		# lower() is a built-in Python method primarily used for string handling ( lowercase )
+		# All the commands said by user will be
+		# stored here in 'query' and will be
+		# converted to lower case for easily
+		# recognition of command
+		if 'wikipedia' in query:
+			speak('Searching Wikipedia...')
+			query = query.replace("wikipedia", "")
+			results = wikipedia.summary(query, sentences = 3)
+			speak("According to Wikipedia")
+			print(results)
+			speak(results)
+			time.sleep(2)
+			speak("Doy Need Another Thing")
+
+		elif 'open youtube' in query:
+			speak("Here you go to Youtube\n")
+			webbrowser.open("youtube.com")
+			time.sleep(5)
+			speak("Doy Need Another Thing")
+		elif 'woman' in query:
+			engine.setProperty('voice', voices[1].id)
+			speak(" iam here to you ")
+			time.sleep(2)
+			speak("how can i help you  ")			
+		elif 'open google' in query:
+			speak("Here you go to Google\n")
+			webbrowser.open("google.com")
+		elif 'Female' in query:
+			changeVoice()
+			woman
+
+		elif 'open stackoverflow' in query:
+			speak("Here you go to Stack Over flow.Happy coding")
+			webbrowser.open("stackoverflow.com")
+
+		elif 'play music' in query or "play song" in query:
+			speak("Here you go with music")
+			music_dir = "E:\songs"
+			songs = os.listdir(music_dir)
+			print(songs)
+			random = os.startfile(os.path.join(music_dir, songs[0]))
+
+		elif 'the time' in query:
+			speak(ctime())
+
+
+		elif 'how are you' in query:
+			speak("I am fine, Thank you")
+			speak("How are you, Sir")
+
+		elif 'fine' in query or "good" in query:
+			speak("It's good to know that your fine")
+
+		elif "change my name to" in query:
+			query = query.replace("change my name to", "")
+			assname = query
+
+		elif "change name" in query:
+			speak("What would you like to call me, Sir ")
+			assname = takeCommand()
+			speak("Thanks for naming me")
+
+		elif "what's your name" in query or "What is your name" in query:
+			speak("My friends call me")
+			speak(assname)
+			print("My friends call me", assname)
+
+		elif 'thanks' in query:
+			speak("Thanks for giving me your time bye bye ")
+			exit()
+			
+		elif "who made you" in query or "who created you" in query:
+			speak("I have been created by Ahmed Adel.")
+			
+		elif 'joke' in query:
+			speak(pyjokes.get_joke())
+			time.sleep(5)
+			speak("Doy Need Another Thing")
+
+
+
+
+		elif 'search' in query or 'play' in query:
+			
+			query = query.replace("search", "")
+			query = query.replace("play", "")		
+			webbrowser.open(query)
+			time.sleep(2)
+			speak("Doy Need Another Thing")
+
+		elif "who i am" in query:
+			speak("If you talk then definitely your human.")
+
+		elif "why you came to world" in query:
+			speak("Thanks to Ahmed Adel. further It's a secret")
+
+
+		elif "who are you" in query:
+			speak("I am your virtual assistant created by Ahmed Adel")
+
+		elif 'reason for you' in query:
+			speak("To Help You In Your Life")
+
+		elif 'change background' in query:
+			ctypes.windll.user32.SystemParametersInfoW(20,
+													0,
+													"Location of wallpaper",
+													0)
+			speak("Background changed successfully")
+
+
+		elif 'shutdown system' in query:
+				speak("Hold On a Sec ! Your system is on its way to shut down")
+				subprocess.call('shutdown / p /f')
+				
+		elif 'empty recycle bin' in query:
+			winshell.recycle_bin().empty(confirm = False, show_progress = False, sound = True)
+			speak("Recycle Bin Recycled")
+
+		elif "don't listen" in query or "stop listening" in query:
+			speak("for how much time you want to stop jarvis from listening commands")
+			a = int(takeCommand())
+			time.sleep(a)
+			print(a)
+
+		elif "where is" in query:
+			query = query.replace("where is", "")
+			location = query
+			speak("User asked to Locate")
+			speak(location)
+			webbrowser.open("https://www.google.nl/maps/place/" + location + "")
+
+		elif "camera" in query or "take a photo" in query:
+			ec.capture(0, "Ahmed Adel Camera ", "img.jpg")
+
+		elif "restart" in query:
+			subprocess.call(["shutdown", "/r"])
+			
+		elif "hibernate" in query or "sleep" in query:
+			speak("Hibernating")
+			subprocess.call("shutdown / h")
+		
+
+		elif "Mano" in query:
+			
+			wishMe()
+			speak("Mano in your service Mister")
+			speak(assname)
+
+		elif "wikipedia" in query:
+			webbrowser.open("wikipedia.com")
+			time.sleep(5)
+			speak("Doy Need Another Thing")
+
+		elif "Good Morning" in query:
+			speak("A warm" +query)
+			speak("How are you Mister")
+			speak(assname)
+	# most asked question from google Assistant
+		elif "will you be my gf" in query or "will you be my bf" in query:
+			speak("I'm not sure about, may be you should give me some time")
+
+		elif "how are you" in query:
+			speak("I'm fine, glad you me that")
+
+		elif "i love you" in query:
+			speak("It's hard to understand")
+
+
