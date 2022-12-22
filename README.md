@@ -8,7 +8,7 @@ https://user-images.githubusercontent.com/70117930/209203261-b3cc6bc9-9d16-4b62-
 
 
 
-Youtube Link: https://www.youtube.com/watch?v=gtIG0iqFCaY
+Full Video Youtube Link: https://www.youtube.com/watch?v=gtIG0iqFCaY
 # Installation libarays
 Use the pip package manager to install this lib
 #### `pip install SpeechRecognition` to let Your Assistant recognize your voice
